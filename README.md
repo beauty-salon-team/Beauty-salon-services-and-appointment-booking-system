@@ -13,26 +13,35 @@
 1. **مشتری (Customer):** مشاهده خدمات و رزرو نوبت.
 2. **مدیر سیستم / ادمین (Admin):** مدیریت خدمات و نوبت‌ها.
 
-## 🛠️ تکنولوژی‌های پیشنهادی
-*(طبق تصمیم‌گیری تیم و مستندسازی در فایل معماری)*
-- **Frontend:** React.js (یا Next.js)
+## 🛠 تکنولوژی‌های پروژه
+- **Frontend:** React.js
 - **Backend:** Node.js + Express
-- **Database:** PostgreSQL
+- **Database:** PostgreSQL (در فاز طراحی)
 
 ## 📂 مستندات پروژه
 تمامی مستندات و نمودارهای طراحی در پوشه `Docs` قرار دارند:
-- [مستندات معماری و انتخاب تکنولوژی](./Docs/architecture.md)
-- [طراحی دیتابیس و ERD](./Docs/database-schema.md)
-- **نمودارهای UML:**
-  - [نمودار Use Case](./Docs/diagrams/use-case-diagram.png)
-  - [نمودار Class](./Docs/diagrams/class-diagram.png)
-  - [نمودار ERD](./Docs/diagrams/erd-diagram.png)
+- [مستندات معماری و انتخاب تکنولوژی](./Docs/Architecture.md)
+- [طراحی دیتابیس و ERD](./Docs/DatabaseSchema.md)
+- [نیازمندی‌ها و داستان‌های کاربری](./Docs/user-story.md)
+- [فرآیند توسعه و Scrum](./Docs/Scrum-Process.md)
+- [بک‌لاگ محصول و اسپرینت](./Docs/Backlog.md)
+
+**نمودارهای UML:**
+- [نمودار Use Case](./Docs/Diagrams/use-case-diagram.png)
+- [نمودار Class](./Docs/Diagrams/class-diagram.png)
+- [نمودار ERD](./Docs/Diagrams/erd-diagram.png)
+
+## 💻 ساختار کدها
+- **`backend/`**: کدهای سمت سرور (Node.js + Express) با معماری MVC
+- **`frontend/`**: کدهای سمت کاربر (React.js) - *در حال توسعه*
 
 ## 🚀 وضعیت پروژه (Status)
 - [x] تشکیل تیم و انتخاب موضوع
 - [x] کشف نیازمندی‌ها و نوشتن User Stories (MoSCoW)
 - [x] طراحی معماری و دیتابیس (UML Diagrams)
-- [ ] **در حال انجام:** پیاده‌سازی Sprint 1 (رزرو نوبت و نمایش خدمات)
+- [x] مدیریت پروژه با Scrum و تعریف Product Backlog
+- [x] **در حال انجام:** پیاده‌سازی Sprint 1 (راه‌اندازی بک‌اند و APIها)
+- [ ] توسعه فرانت‌اند (React)
 - [ ] تست و استقرار نهایی
 
 ---
