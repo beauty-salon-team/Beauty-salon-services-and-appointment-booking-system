@@ -1,47 +1,49 @@
-# Class Specification — هوم‌استور
+# Class Specification — سیستم سالن زیبایی
 
-## Product
+## User (کاربر)
 | بخش | توضیح |
 |------|-------|
-| مسئولیت | نمایش و مدیریت محصولات |
-| ویژگی‌ها | id, name, price, stock, brand |
-| متدها | getDetails(), updateStock(), isAvailable() |
-| روابط | Category 1:N Product |
+| مسئولیت | مدیریت اطلاعات پایه تمام کاربران سیستم (مشتری، متخصص، ادمین) |
+| ویژگی‌ها | id, name, phone, password_hash, role |
+| متدها | login(), logout(), changePassword() |
+| روابط | User 1:1 Customer, User 1:1 Specialist |
 
-## Category
+## Customer (مشتری)
 | بخش | توضیح |
 |------|-------|
-| مسئولیت | گروه‌بندی محصولات |
-| ویژگی‌ها | id, name, slug, parent_id |
-| روابط | Category 1:N Product |
+| مسئولیت | مدیریت اطلاعات اختصاصی مشتریان |
+| ویژگی‌ها | id, user_id, address |
+| متدها | bookAppointment(), cancelAppointment(), viewAppointments() |
+| روابط | Customer 1:N Appointment, Customer 1:N Review |
 
-## Customer
+## Specialist (متخصص)
 | بخش | توضیح |
 |------|-------|
-| مسئولیت | مدیریت اطلاعات مشتری |
-| ویژگی‌ها | id, name, phone, address |
-| متدها | placeOrder(), viewOrders() |
-| روابط | Customer 1:N Order |
+| مسئولیت | مدیریت اطلاعات و برنامه کاری متخصصین |
+| ویژگی‌ها | id, user_id, specialty, working_hours_start, working_hours_end |
+| متدها | viewSchedule(), updateAvailability() |
+| روابط | Specialist 1:N Appointment, Specialist 1:N Review |
 
-## Order
+## Service (خدمات)
 | بخش | توضیح |
 |------|-------|
-| مسئولیت | مدیریت سفارش‌ها |
-| ویژگی‌ها | id, total, status, created_at |
-| متدها | calculateTotal(), updateStatus() |
-| روابط | Customer 1:N Order, Order 1:N OrderItem |
+| مسئولیت | مدیریت خدمات ارائه شده در سالن |
+| ویژگی‌ها | id, title, description, price, duration_minutes |
+| متدها | getDetails(), updatePrice() |
+| روابط | Service 1:N Appointment |
 
-## OrderItem
+## Appointment (نوبت)
 | بخش | توضیح |
 |------|-------|
-| مسئولیت | یک قلم در سفارش |
-| ویژگی‌ها | id, quantity, unit_price |
-| متدها | getSubtotal() |
-| روابط | Order 1:N OrderItem |
+| مسئولیت | مدیریت فرآیند رزرو، لغو و وضعیت نوبت‌ها |
+| ویژگی‌ها | id, customer_id, specialist_id, service_id, appointment_date, status |
+| متدها | confirm(), cancel(), complete(), reschedule() |
+| روابط | Customer 1:N Appointment, Specialist 1:N Appointment, Service 1:N Appointment |
 
-## User (Admin)
+## Review (نظرات)
 | بخش | توضیح |
 |------|-------|
-| مسئولیت | مدیریت ادمین‌ها |
-| ویژگی‌ها | id, email, password_hash, role |
-| متدها | login(), logout() |
+| مسئولیت | مدیریت نظرات و امتیازات ثبت شده توسط مشتریان |
+| ویژگی‌ها | id, customer_id, specialist_id, rating, comment, created_at |
+| متدها | submitReview(), calculateAverageRating() |
+| روابط | Customer 1:N Review, Specialist 1:N Review |
