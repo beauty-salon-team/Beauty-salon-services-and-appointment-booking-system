@@ -65,10 +65,12 @@
 
 کد زیر با استفاده از Mermaid نوشته شده است و در صورت قرار گرفتن در یک فایل Markdown پشتیبانی‌شده، مانند فایل‌های Markdown گیت‌هاب، نمودار ERD را به‌صورت تصویری نمایش می‌دهد.
 
+
 erDiagram
     USERS ||--o{ APPOINTMENTS : books
     SERVICES ||--o{ APPOINTMENTS : includes
     SPECIALISTS ||--o{ APPOINTMENTS : handles
+
     USERS {
         int user_id PK
         string full_name
@@ -78,6 +80,7 @@ erDiagram
         string role
         datetime created_at
     }
+
     SERVICES {
         int service_id PK
         string service_name
@@ -86,6 +89,7 @@ erDiagram
         int duration
         boolean is_active
     }
+
     SPECIALISTS {
         int specialist_id PK
         string full_name
@@ -93,6 +97,7 @@ erDiagram
         string specialization
         boolean is_active
     }
+
     APPOINTMENTS {
         int appointment_id PK
         int user_id FK
@@ -104,7 +109,6 @@ erDiagram
         string status
         datetime created_at
     }
-
 ۶. محدودیت‌ها و قواعد پایگاه داده
 
 برای حفظ صحت و یکپارچگی اطلاعات، هر جدول باید دارای کلید اصلی یکتا باشد و کلیدهای خارجی باید به رکوردهای معتبر در جداول مرتبط اشاره کنند.
