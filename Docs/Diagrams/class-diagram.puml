@@ -1,0 +1,41 @@
+@startuml
+left to right direction
+
+class Customer {
+  id: int
+  name: string
+  phone: string
+  address: string
+  register()
+  login()
+}
+
+class Appointment {
+  id: int
+  appointmentDate: date
+  appointmentTime: string
+  status: string
+  bookAppointment()
+  cancelAppointment()
+}
+
+class Service {
+  id: int
+  name: string
+  price: float
+  duration: int
+}
+
+class Admin {
+  id: int
+  username: string
+  manageServices()
+  viewAppointments()
+}
+
+Customer "1" -- "0..*" Appointment : books
+Appointment "0..*" -- "1" Service : for
+Admin ..> Service : manages
+Admin ..> Appointment : manages
+
+@enduml
