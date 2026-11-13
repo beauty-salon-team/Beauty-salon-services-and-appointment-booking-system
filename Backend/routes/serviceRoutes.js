@@ -1,61 +1,52 @@
 const express = require('express');
-
 const router = express.Router();
+const pool = require('../db');
 
-// لیست خدمات سالن زیبایی
-const services = [
-  {
-    id: 1,
-    name: 'اصلاح و کوتاهی مو',
-    description: 'کوتاهی و مرتب کردن مو',
-    price: 250000
-  },
-  {
-    id: 2,
-    name: 'رنگ مو',
-    description: 'رنگ کردن مو با توجه به درخواست مشتری',
-    price: 800000
-  },
-  {
-    id: 3,
-    name: 'مانیکور',
-    description: 'مراقبت و زیبایی ناخن‌های دست',
-    price: 300000
-  },
-  {
-    id: 4,
-    name: 'پاکسازی پوست',
-    description: 'پاکسازی و مراقبت از پوست صورت',
-    price: 500000
-  }
-];
+// دریافت تمام خدمات از دیتابیس
+router.get('/', async (req, res) => {
+  try {
+    const result = await pool.query(
+      'SELECT * FROM services ORDER BY id'
+    );
 
-// دریافت فهرست تمام خدمات
-router.get('/', (req, res) => {
-  res.status(200).json({
-    success: true,
-    count: services.length,
-    data: services
-  });
-});
-
-// دریافت اطلاعات یک خدمت بر اساس شناسه
-router.get('/:id', (req, res) => {
-  const id = Number(req.params.id);
-
-  const service = services.find(item => item.id === id);
-
-  if (!service) {
-    return res.status(404).json({
+    res.status(200).json({
+      success: true,
+      count: result.rows.length,
+      data: result.rows
+    });
+  } catch (error) {
+    res.status(500).json({
       success: false,
-      message: 'خدمت موردنظر پیدا نشد.'
+      message: 'خطا در دریافت خدمات'
     });
   }
+});
 
-  res.status(200).json({
-    success: true,
-    data: service
-  });
+// دریافت یک خدمت بر اساس شناسه
+router.get('/:id', async (req, res) => {
+  try {
+    const result = await pool.query(
+      'SELECT * FROM services WHERE id = $1',
+      [req.params.id]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: 'خدمت موردنظر پیدا نشد.'
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: result.rows[0]
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'خطا در دریافت خدمت'
+    });
+  }
 });
 
 module.exports = router;

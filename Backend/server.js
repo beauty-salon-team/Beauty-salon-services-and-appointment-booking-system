@@ -1,23 +1,34 @@
 const express = require('express');
 const cors = require('cors');
-const serviceRoutes = require('./routes/serviceRoutes');
+require('dotenv').config();
 
 const app = express();
 const PORT = 3000;
 
-// Middleware ها
-app.use(cors()); // اجازه ارتباط فرانت‌اند با بک‌اند
-app.use(express.json()); // خواندن داده‌های JSON
+// تنظیمات اصلی سرور
+app.use(cors());
+app.use(express.json());
 
-// مسیر تست (Home Route)
+// اتصال مسیرها
+const authRoutes = require('./routes/authRoutes');
+const appointmentRoutes = require('./routes/appointmentRoutes');
+const serviceRoutes = require('./routes/serviceRoutes');
+const specialistRoutes = require('./routes/specialistRoutes');
+
+// مسیر اصلی
 app.get('/', (req, res) => {
-  res.json({ message: "به API سالن زیبایی خوش آمدید!" });
+    res.json({
+        message: 'به سیستم رزرو نوبت سالن زیبایی خوش آمدید.'
+    });
 });
 
-// استفاده از مسیرهای مربوط به خدمات
+// مسیرهای API
 app.use('/api/services', serviceRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/appointments', appointmentRoutes);
+app.use('/api/specialists', specialistRoutes);
 
-// روشن کردن سرور
+// اجرای سرور
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+    console.log(`Server is running on http://localhost:${PORT}`);
 });
