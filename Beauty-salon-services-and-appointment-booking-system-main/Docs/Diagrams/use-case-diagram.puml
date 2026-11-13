@@ -1,0 +1,25 @@
+@startuml
+left to right direction
+
+actor Customer
+actor Admin
+
+rectangle "Beauty Salon Booking System" {
+  usecase "View Services" as UC1
+  usecase "View Prices" as UC2
+  usecase "Book Appointment" as UC3
+  usecase "Cancel Appointment" as UC4
+  usecase "Manage Services" as UC5
+  usecase "View Appointments" as UC6
+  usecase "Manage Schedule" as UC7
+}
+
+Customer --> UC1
+Customer --> UC2
+Customer --> UC3
+Customer --> UC4
+
+Admin --> UC5
+Admin --> UC6
+Admin --> UC7
+@enduml
