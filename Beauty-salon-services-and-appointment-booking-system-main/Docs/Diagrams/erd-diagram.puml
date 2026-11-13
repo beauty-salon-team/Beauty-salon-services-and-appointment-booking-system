@@ -1,0 +1,51 @@
+@startuml
+left to right direction
+
+entity Customer {
+  * customer_id : int <<PK>>
+  --
+  name : varchar
+  phone : varchar
+}
+
+entity BeautySpecialist {
+  * specialist_id : int <<PK>>
+  --
+  name : varchar
+  specialty : varchar
+}
+
+entity Service {
+  * service_id : int <<PK>>
+  --
+  name : varchar
+  price : decimal
+  duration : int
+}
+
+entity Schedule {
+  * schedule_id : int <<PK>>
+  --
+  specialist_id : int <<FK>>
+  work_date : date
+  start_time : time
+  end_time : time
+}
+
+entity Appointment {
+  * appointment_id : int <<PK>>
+  --
+  customer_id : int <<FK>>
+  specialist_id : int <<FK>>
+  service_id : int <<FK>>
+  appointment_date : date
+  appointment_time : time
+  status : varchar
+}
+
+Customer ||--o{ Appointment : books
+BeautySpecialist ||--o{ Appointment : handles
+Service ||--o{ Appointment : includes
+BeautySpecialist ||--o{ Schedule : has
+
+@enduml
