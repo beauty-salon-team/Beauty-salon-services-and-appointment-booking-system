@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const pool = require('../db');
 const authenticateToken = require('../authMiddleware');
+const { checkAppointmentData } = require('../services/appointmentService');
 
 // ثبت رزرو نوبت
 router.post('/', authenticateToken, async (req, res) => {
@@ -57,42 +58,27 @@ router.post('/', authenticateToken, async (req, res) => {
       });
     }
 
-    // بررسی وجود متخصص
-    const specialistResult = await pool.query(
-      'SELECT id, specialty FROM specialists WHERE id = $1',
-      [specialist_id]
-    );
+   // بررسی وجود متخصص و خدمت
+const appointmentData = await checkAppointmentData(
+  service_id,
+  specialist_id
+);
 
-    if (specialistResult.rows.length === 0) {
-      return res.status(404).json({
-        success: false,
-        message: 'متخصص مورد نظر پیدا نشد.'
-      });
-    }
+if (appointmentData.error) {
+  return res.status(appointmentData.status).json({
+    success: false,
+    message: appointmentData.error
+  });
+}
 
-    // بررسی وجود خدمت
-    const serviceResult = await pool.query(
-      'SELECT id, name, duration_minutes FROM services WHERE id = $1',
-      [service_id]
-    );
+const serviceResult = {
+  rows: [appointmentData.service]
+};
 
-    if (serviceResult.rows.length === 0) {
-      return res.status(404).json({
-        success: false,
-        message: 'خدمت انتخاب شده پیدا نشد.'
-      });
-    }
-
-    // بررسی تطابق تخصص متخصص با خدمت
-    if (
-      specialistResult.rows[0].specialty !==
-      serviceResult.rows[0].name
-    ) {
-      return res.status(400).json({
-        success: false,
-        message: 'این متخصص خدمت انتخاب شده را ارائه نمی‌دهد.'
-      });
-    }
+const specialistResult = {
+  rows: [appointmentData.specialist]
+};
+ 
     // بررسی معتبر بودن تاریخ
     const selectedDate = new Date(appointment_date);
     const today = new Date();
