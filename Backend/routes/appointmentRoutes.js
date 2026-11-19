@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const pool = require('../db');
-const authenticateToken = require('../authMiddleware');
+const pool = require('../config/db');
+const authenticateToken = require('../middleware/authMiddleware');
 const { checkAppointmentData } = require('../services/appointmentService');
 
 // ثبت رزرو نوبت

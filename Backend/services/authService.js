@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const pool = require('../db');
+const pool = require('../config/db');
 
 // ثبت‌نام کاربر
 async function registerUser(full_name, email, password, phone) {

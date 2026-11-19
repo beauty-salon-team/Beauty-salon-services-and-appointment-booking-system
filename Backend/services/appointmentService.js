@@ -1,4 +1,4 @@
-const pool = require('../db');
+const pool = require('../config/db');
 
 // بررسی وجود متخصص و خدمت و تطابق تخصص
 async function checkAppointmentData(service_id, specialist_id) {

@@ -1,18 +1,20 @@
 const express = require('express');
 const router = express.Router();
-const pool = require('../db');
 
-// دریافت تمام خدمات از دیتابیس
+const {
+  getAllServices,
+  getServiceById
+} = require('../services/serviceService');
+
+// دریافت تمام خدمات
 router.get('/', async (req, res) => {
   try {
-    const result = await pool.query(
-      'SELECT * FROM services ORDER BY id'
-    );
+    const services = await getAllServices();
 
     res.status(200).json({
       success: true,
-      count: result.rows.length,
-      data: result.rows
+      count: services.length,
+      data: services
     });
   } catch (error) {
     res.status(500).json({
@@ -25,12 +27,9 @@ router.get('/', async (req, res) => {
 // دریافت یک خدمت بر اساس شناسه
 router.get('/:id', async (req, res) => {
   try {
-    const result = await pool.query(
-      'SELECT * FROM services WHERE id = $1',
-      [req.params.id]
-    );
+    const service = await getServiceById(req.params.id);
 
-    if (result.rows.length === 0) {
+    if (!service) {
       return res.status(404).json({
         success: false,
         message: 'خدمت موردنظر پیدا نشد.'
@@ -39,7 +38,7 @@ router.get('/:id', async (req, res) => {
 
     res.status(200).json({
       success: true,
-      data: result.rows[0]
+      data: service
     });
   } catch (error) {
     res.status(500).json({
