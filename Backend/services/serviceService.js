@@ -1,22 +1,13 @@
-const pool = require('../config/db');
+const Service = require('../models/Service');
 
 // دریافت تمام خدمات
 async function getAllServices() {
-    const result = await pool.query(
-        'SELECT * FROM services ORDER BY id'
-    );
-
-    return result.rows;
+    return Service.getAllServices();
 }
 
 // دریافت یک خدمت بر اساس شناسه
 async function getServiceById(id) {
-    const result = await pool.query(
-        'SELECT * FROM services WHERE id = $1',
-        [id]
-    );
-
-    return result.rows[0] || null;
+    return Service.getServiceById(id);
 }
 
 module.exports = {

@@ -1,12 +1,8 @@
-const pool = require('../config/db');
+const Specialist = require('../models/Specialist');
 
 // دریافت فهرست متخصص‌های سالن
 async function getAllSpecialists() {
-    const result = await pool.query(
-        'SELECT * FROM specialists ORDER BY id'
-    );
-
-    return result.rows;
+    return Specialist.getAllSpecialists();
 }
 
 module.exports = {
